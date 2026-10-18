@@ -1,0 +1,72 @@
+/* vanDijkFit theme at de07838. Office-only colors are named separately. */
+:root {
+  --hq-color-background: #20262e;
+  --hq-color-background-alt: #262e37;
+  --hq-color-panel: #2c3540;
+  --hq-color-panel-muted: #364150;
+  --hq-color-panel-strong: #1b222a;
+  --hq-color-border: #3b4654;
+  --hq-color-text: #f5f7fb;
+  --hq-color-text-muted: #aeb9c8;
+  --hq-color-text-soft: #7f8c9c;
+  --hq-color-accent: #4da4ff;
+  --hq-color-accent-soft: #243d56;
+  --hq-color-success: #77d19b;
+  --hq-color-danger: #ff6f7d;
+  --hq-color-warning: #ffc76c;
+  --hq-color-input: #404b58;
+  --hq-color-white: #fff;
+  --hq-color-ripple: rgb(255 255 255 / 18%);
+  --hq-space-1: 4px;
+  --hq-space-2: 8px;
+  --hq-space-3: 12px;
+  --hq-space-4: 14px;
+  --hq-space-5: 16px;
+  --hq-space-6: 18px;
+  --hq-space-7: 24px;
+  --hq-space-8: 32px;
+  --hq-radius-sm: 12px;
+  --hq-radius-md: 18px;
+  --hq-radius-lg: 24px;
+  --hq-radius-pill: 999px;
+  --hq-border-width: 1px;
+  --hq-font: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --hq-motion-fast: 140ms;
+  --hq-motion-reorder: 170ms;
+  --hq-motion-window: 340ms;
+  --hq-ease-window: cubic-bezier(.65, 0, .35, 1);
+  --hq-pressed-opacity: .96;
+  --hq-disabled-opacity: .45;
+  --hq-sprite-frame-duration: 280ms;
+  --hq-character-kairo: #ffb275;
+  --hq-character-nyx: #78d7ff;
+  --hq-character-rune: #b799ff;
+  --hq-office-floor: #303c46;
+  --hq-office-floor-line: #3a4854;
+  --hq-office-wood: #a58467;
+  --hq-office-wood-light: #c4a181;
+  --hq-office-wood-dark: #655346;
+  --hq-office-leaf: #77a88f;
+  --hq-office-leaf-dark: #456f60;
+  --hq-office-skin: #e9b28f;
+  --hq-office-hair: #33303d;
+}
+
+[data-theme='light'] {
+  --hq-color-background: #f7f8fa;
+  --hq-color-background-alt: #eef3f7;
+  --hq-color-panel: #fff;
+  --hq-color-panel-muted: #e8eef5;
+  --hq-color-panel-strong: #fff;
+  --hq-color-border: #e1e6ee;
+  --hq-color-text: #1d2433;
+  --hq-color-text-muted: #687386;
+  --hq-color-text-soft: #9aa3af;
+  --hq-color-accent: #1f8fff;
+  --hq-color-accent-soft: #e5f1ff;
+  --hq-color-success: #20a86b;
+  --hq-color-danger: #e8314a;
+  --hq-color-warning: #f59e0b;
+  --hq-color-input: #f1f5f9;
+  --hq-color-ripple: rgb(31 143 255 / 14%);
+}

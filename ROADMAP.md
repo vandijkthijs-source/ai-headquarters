@@ -1,16 +1,26 @@
 # AI Headquarters roadmap
 
-## v0.3 — proposed, awaiting user approval
+## v0.3 — approved room-only scope
 
-No v0.3 implementation is authorized yet. Deliver each phase as a focused, verified Git checkpoint once Git is available. Preserve selection, task creation, progress display, activity, and pause controls throughout.
+The user approved building v0.3 on 2026-10-18 with a revised visual scope: only small interactive rooms, with no surrounding dashboard, sidebar, or persistent control panels. Preserve task creation, ownership, selection, progress, activity, and pause/resume through interactions with characters and room objects. Earlier references to a sidebar or external room tabs are superseded by this direction. Use verified local Git checkpoints throughout.
+
+### Approved interaction layout
+
+- A compact draggable room scene is the complete application surface. A room nameplate serves as the drag handle, with keyboard arrow movement and a position reset.
+- Pixel-art Kairo, Nyx, and Rune are selectable; selecting a character opens task details inside the room.
+- Clicking a workstation directs the selected character there through walkable floor waypoints. Idle characters periodically travel between desks; coding and walk animations reflect movement/task state.
+- Physical doors move between Engineering, UI Lab, and QA mini-rooms. Room switches preserve tasks and character identities.
+- An interactive wall board opens local task creation and activity. A wall control pauses/resumes the simulation. In-room overlays appear only on interaction and dismiss with Escape/close.
+- Persistent small room signage identifies all activity as simulation. No AI execution or integration is implied.
+- Apply the verified vanDijkFit slate/blue palette and shared local tokens to the rooms, signage, and contextual overlays while retaining crisp pixel-art characters and furnishings.
 
 Primary design reference: [vanDijkFit](https://github.com/vandijkthijs-source/vanDijkFit), inspected read-only at `de078380400ca76c15fcdbb65777c3a4a1ea76ec` on 2026-10-18. PROJECT.md records source links, exact palettes, observed components, and the proposed token contract. No reference-repository changes are permitted.
 
 ### Prerequisites and design foundation
 
 - Completed before v0.3: the two ESLint fixes and per-task completion reporting; lint/build pass (see DEVLOG.md).
-- Blocked: AI Headquarters Git checkpoints. `.git` is absent in the current environment. Resolve existing-history recovery versus fresh local initialization with the user, then create a reviewed checkpoint before feature work. No sudo, metadata deletion/overwrite, or permission change without approval.
-- Await approval of this revised redesign plan. Documentation is authorized; token code, visual changes, and v0.3 features remain pending.
+- Git initialization was explicitly approved and completed. A baseline is staged; the initial commit awaits the user's repository-local commit identity. Finish that checkpoint before feature work. No sudo, metadata deletion/overwrite, or permission change without approval.
+- The room-only v0.3 direction is approved. No further design approval is required for its local implementation.
 - First approved design slice: create the local token source described in PROJECT.md, preserving the current appearance until component migration. Adopt source semantic colors, radii, and typography; label derived spacing and office motion values as adaptations.
 - Next slice: apply slate surfaces, blue actions/selections, thin borders, 18/24 radii, and system sans hierarchy to the existing chrome/controls. Keep the scene and interactions intact. This establishes the visual foundation before sprites and room work.
 - Acceptance: changing a token affects all migrated consumers; no repeated palette literals or duplicated UI duration constants; lint/build and affected browser interactions pass. No new UI framework or dependency on vanDijkFit.
@@ -61,7 +71,7 @@ Primary design reference: [vanDijkFit](https://github.com/vandijkthijs-source/va
 
 Approval of this plan would authorize local incremental v0.3 work. It would not authorize pushing, merging, deploying, modifying vanDijkFit, or connecting real AI services. Proposed sprite dimensions, room names, and movement mechanics are defaults for review, not existing capabilities.
 
-The local Git setup decision remains a separate prerequisite. This read-only design-reference request does not select new history over recovery. Token creation and component migration will begin only after that decision is resolved and the redesign plan is approved.
+Fresh local Git initialization is now approved. Complete the baseline commit once the user's name/email are supplied, then implement the approved room-only scope. Publishing and changes to vanDijkFit remain outside this authorization.
 
 ## Later ideas — outside v0.3
 

@@ -4,6 +4,8 @@
 
 An interactive miniature office that makes a team of characters feel present while keeping simulated behavior clearly distinct from real AI execution. The next proposed release, v0.3, adds true pixel-art characters, movement, richer coding animations, a draggable compact window, and interactive mini-rooms. Styling should take inspiration from vanDijkFit without modifying that project.
 
+Latest approved direction (2026-10-18): build v0.3 as rooms only, with no surrounding dashboard or persistent sidebar. Characters, desks, doors, a wall task board, and a pause control provide the interaction surface. Task details/composer/activity appear contextually within the room. This supersedes earlier proposed exterior panels and room-tab navigation. Fresh local Git initialization is approved; the baseline commit awaits the user's commit identity.
+
 ## Inspected baseline — 2026-10-18
 
 README-INSTALL.txt describes the current application as v0.2 compact widget. package.json still declares 0.0.0; this is a metadata discrepancy, not evidence of a released v0.3. README.md remains the Vite starter documentation.

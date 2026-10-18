@@ -2,6 +2,22 @@
 
 Record dated work, actual validation results, limitations, and next steps. Do not label planned or simulated work as completed execution.
 
+## 2026-10-18 — v0.3 foundation checkpoint
+
+- Confirmed the user's same-account choice means GitHub account vandijkthijs-source, with AI Headquarters separate from vanDijkFit. Read the author identity on the two public vanDijkFit commits and reused that exact name/privacy email in this repository's local Git configuration. No global Git setting or remote was changed.
+- Baseline checkpoint: `5f19d70` preserves the working v0.2 dashboard and project documents.
+- Added shared vanDijkFit color/spacing/panel/motion tokens, pure waypoint movement functions, a cleaned-up movement timer, and pointer/keyboard window-drag hook. These are foundation modules; current UI is unchanged at this checkpoint.
+- Movement tests pass: collision-free aisle routing around desks, atomic destination swaps, repeated autonomous cycles with unique destinations, and reduced-motion behavior. Tests use the installed TypeScript compiler and Node's test runner; no dependency added. Native Node TypeScript execution was unavailable in this Node build, so tests transpile the isolated module in memory.
+- Lint/build passed for the foundation modules. Next: integrate room visuals and retain tasks, activity, owner selection, and pause through contextual object interactions.
+
+## 2026-10-18 — room-only v0.3 approval and Git initialization
+
+- User approved building v0.3 with pixel-art characters, a draggable mini window, walking between desks, and multiple mini-rooms. All interaction should happen through room visuals, with no surrounding dashboard. Updated PROJECT.md/ROADMAP.md to record this superseding direction.
+- User explicitly chose a fresh local Git repository. Ran `git init -b main` successfully; did not delete or overwrite metadata, use sudo, change permissions, or configure a remote.
+- Reviewed and staged the existing source/config/docs/snapshots as a baseline; node_modules and dist are ignored. `git diff --cached --check` passed.
+- Baseline lint and build both pass. Git user.name/user.email are unset; requested the user's repository-local commit identity. No identity was invented and no commit was created yet.
+- Feature implementation waits for the baseline checkpoint. No v0.3 code or dashboard appearance changed in this preparation step.
+
 ## 2026-10-18 — vanDijkFit read-only design reference and revised plan
 
 ### Completed
