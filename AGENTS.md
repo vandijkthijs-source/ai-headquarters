@@ -2,8 +2,8 @@
 
 ## Scope and approval
 
-- Work in this project only. Preserve the existing working dashboard and its interactions.
-- v0.3 is a proposal in ROADMAP.md. Do not implement it until the user explicitly approves the plan.
+- Work in this project only. Preserve working interactions and make changes in focused checkpoints.
+- The user approved v0.3 as a room-only interface: pixel characters, walking, draggable scene, and multiple small rooms. Do not restore the surrounding v0.2 dashboard/sidebar. All controls live in room objects or contextual dialogs.
 - Never push, merge, deploy, or modify vanDijkFit without explicit user permission. Its name in demo tasks is not authorization.
 - Make small, focused changes to existing files. Avoid full rewrites, unnecessary dependencies, and unrelated cleanup.
 - Preserve the `src.before-*` and `index.before-*` snapshots; do not restore them over the active application.
@@ -20,7 +20,7 @@
 ## Technical conventions
 
 - React + TypeScript + Vite; npm and package-lock.json are the existing toolchain.
-- Current application: src/App.tsx, src/App.css, src/index.css; bootstrap: src/main.tsx.
+- Task state: src/App.tsx; room visuals/dialogs/sprites: src/components; movement and drag: src/hooks; tokens: src/styles/tokens.css; bootstrap: src/main.tsx.
 - Keep TypeScript strict and retain effect cleanup for timers and future event listeners.
 - Extract small components or hooks only as needed for an approved feature.
 - Keep controls accessible by keyboard, provide meaningful labels, support narrow screens and reduced motion in new interactions.
@@ -32,7 +32,8 @@
 - Clearly label simulated activity in future UI changes. A "Live coding" label or animated character is not evidence of real AI work.
 - Any future real integration needs explicit scope and truthful status based on actual results; never expose credentials in client code.
 
-## Known baseline (2026-10-18)
+## Current status (2026-10-18)
 
-- Build passes. Lint fails in src/App.tsx: no-useless-assignment and react-hooks/set-state-in-effect. Details are in DEVLOG.md.
-- `.git` is empty and read-only in the current workspace; `git status` fails. Checkpoint creation remains blocked until a writable, valid repository is available.
+- Build and lint pass; both original ESLint errors were fixed before v0.3.
+- Fresh local Git initialization was approved. Checkpoints use the same observed public commit identity as vandijkthijs-source, configured repository-locally. No remote is configured. Never push, merge, deploy, or modify vanDijkFit without explicit permission.
+- `npm test` checks movement invariants. Browser verification should cover dialogs, task flow, doors, pause, drag bounds, keyboard interaction, mobile layout, and reduced motion.

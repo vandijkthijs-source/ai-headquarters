@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import './App.css'
+import RoomScene from './components/RoomScene'
+import RoomDialog from './components/RoomDialog'
 
 type AgentId = 'kairo' | 'nyx' | 'rune'
 type AgentState = 'idle' | 'coding' | 'reviewing' | 'done'
@@ -11,9 +13,6 @@ type Agent = {
   role: string
   vibe: string
   color: string
-  accent: string
-  x: number
-  y: number
 }
 
 type Task = {
@@ -31,30 +30,21 @@ const agents: Agent[] = [
     name: 'Kairo',
     role: 'Lead Engineer',
     vibe: 'Refactors flows and turns ideas into safe build plans.',
-    color: '#ffb275',
-    accent: '#ffd7ae',
-    x: 17,
-    y: 33,
+    color: 'var(--hq-character-kairo)',
   },
   {
     id: 'nyx',
     name: 'Nyx',
     role: 'UI Hacker',
     vibe: 'Shapes screens, interactions, and the polished feel.',
-    color: '#78d7ff',
-    accent: '#bfeeff',
-    x: 69,
-    y: 33,
+    color: 'var(--hq-character-nyx)',
   },
   {
     id: 'rune',
     name: 'Rune',
     role: 'Test Runner',
     vibe: 'Checks edge cases, flows, and catches weird regressions.',
-    color: '#b799ff',
-    accent: '#e3d5ff',
-    x: 43,
-    y: 74,
+    color: 'var(--hq-character-rune)',
   },
 ]
 
@@ -71,6 +61,7 @@ const clock = () =>
   })
 
 function App() {
+  const [overlay, setOverlay] = useState<'agent' | 'board' | 'help' | null>(null)
   const [selected, setSelected] = useState<AgentId>('nyx')
   const [running, setRunning] = useState(true)
   const [draft, setDraft] = useState('Improve the workout history screen')
@@ -78,8 +69,8 @@ function App() {
   const [{ tasks, activity }, setSimulation] = useState(() => ({
     tasks: starterTasks,
     activity: [
-      `${clock()} · Sprint live. Agents are coding inside the office widget.`,
-      `${clock()} · Safe demo mode. No GitHub or AI calls yet.`,
+      `${clock()} · Office simulation started. Click a teammate or the task board.`,
+      `${clock()} · Demo only. No AI calls, repository edits, or real tests are run.`,
     ],
   }))
 
@@ -108,7 +99,7 @@ function App() {
           else nextState = 'coding'
 
           if (nextState === 'done') {
-            messages.push(`${timestamp} · ${labelOf(task.owner)} wrapped “${task.title}”.`)
+            messages.push(`${timestamp} · ${labelOf(task.owner)} completed simulated task “${task.title}”.`)
           }
 
           return { ...task, progress: nextProgress, state: nextState }
@@ -122,15 +113,11 @@ function App() {
 
     return () => window.clearInterval(timer)
   }, [running, tasks])
-
-  const codingCount = tasks.filter((task) => task.state === 'coding').length
-  const doneCount = tasks.filter((task) => task.state === 'done').length
-
   function addTask() {
     const title = draft.trim()
     if (!title) return
-    const id = `task-${Date.now()}`
-    const message = `${clock()} · New request added: “${title}”.`
+    const id = crypto.randomUUID()
+    const message = `${clock()} · Simulation request added: “${title}”.`
     setSimulation((current) => ({
       tasks: [{
         id,
@@ -147,156 +134,58 @@ function App() {
   }
 
   return (
-    <div className="app">
-      <section className="hq-window" aria-label="AI Headquarters compact office window">
-        <div className="window-bar">
-          <div className="window-dots" aria-hidden="true">
-            <span />
-            <span />
-            <span />
+    <RoomScene agents={agents} selected={selected} running={running}
+      coding={agents.filter(agent => tasks.some(task => task.owner === agent.id && task.state === 'coding')).map(agent => agent.id)}
+      onSelect={id => { setSelected(id as AgentId); setOverlay('agent') }}
+      onBoard={() => setOverlay('board')} onHelp={() => setOverlay('help')}
+      onToggle={() => setRunning(value => !value)} onRoomChange={() => setOverlay(null)}>
+      {overlay && <RoomDialog title={overlay === 'agent' ? selectedAgent.name : overlay === 'board' ? 'The task board' : 'Welcome to the little office'} onClose={() => setOverlay(null)}>
+        {overlay === 'agent' && <>
+          <span className="role-pill">{selectedAgent.role}</span>
+          <p>{selectedAgent.vibe}</p>
+          <div className="status-box">
+            <span>Simulated task · {selectedTask ? stateLabel(selectedTask.state) : 'Idle'}</span>
+            <strong>{selectedTask?.title ?? 'Waiting for a request'}</strong>
+            <div className="progress-row"><span>Progress</span><strong>{selectedTask?.progress ?? 0}%</strong></div>
+            <progress max="100" value={selectedTask?.progress ?? 0} aria-label="Simulated task progress" />
           </div>
-          <div className="window-title">
-            <strong>AI Headquarters</strong>
-            <span>vanDijkFit // compact live view</span>
-          </div>
-          <button className={`live-switch ${running ? 'live' : ''}`} onClick={() => setRunning((value) => !value)}>
-            {running ? 'Live coding' : 'Paused'}
-          </button>
-        </div>
-
-        <div className="window-content">
-          <div className="office-widget">
-            <div className="widget-topline">
-              <span>Little office window</span>
-              <span>{codingCount} coding · {doneCount} done</span>
+          <p className="interaction-hint">Selected. Close this note and click a desk to send {selectedAgent.name} there.</p>
+          <button className="primary-button" onClick={() => { setDraftOwner(selected); setOverlay('board') }}>Give {selectedAgent.name} a request</button>
+        </>}
+        {overlay === 'board' && <>
+          <form className="task-composer" onSubmit={event => { event.preventDefault(); addTask() }}>
+            <label htmlFor="request">A small request</label>
+            <input id="request" value={draft} onChange={event => setDraft(event.target.value)} placeholder="What should the team explore?" maxLength={180} />
+            <div className="composer-row"><label htmlFor="owner" className="sr-only">Assign request to</label>
+              <select id="owner" value={draftOwner} onChange={event => setDraftOwner(event.target.value as AgentId)}>
+                {agents.map(agent => <option key={agent.id} value={agent.id}>{agent.name}</option>)}
+              </select>
+              <button className="primary-button" type="submit" disabled={!draft.trim()}>Add request</button>
             </div>
-
-            <div className="scene">
-              <div className="scene-glow scene-glow-left" />
-              <div className="scene-glow scene-glow-right" />
-              <div className="window-city">
-                <div className="moon" />
-                <div className="tower t1" />
-                <div className="tower t2" />
-                <div className="tower t3" />
-              </div>
-
-              <Desk xClass="desk-left" label="SYSTEMS" tone="warm" code={['git checkout', 'task.plan()', 'review()}']} />
-              <Desk xClass="desk-right" label="UI LAB" tone="cool" code={['<StatsCard />', 'const streak', 'animate()']} />
-              <Desk xClass="desk-bottom" label="QA OPS" tone="violet" code={['npm test', 'expect(true)', 'ship?']} />
-
-              {agents.map((agent) => {
-                const task = tasks.find((item) => item.owner === agent.id && item.state !== 'done')
-                const isSelected = selected === agent.id
-                return (
-                  <button
-                    key={agent.id}
-                    className={`coder ${agent.id} ${isSelected ? 'selected' : ''} ${running ? 'active' : ''}`}
-                    style={{ left: `${agent.x}%`, top: `${agent.y}%`, ['--coder' as never]: agent.color, ['--accent' as never]: agent.accent }}
-                    onClick={() => setSelected(agent.id)}
-                  >
-                    <span className="coder-chair" />
-                    <span className="coder-laptop">
-                      <span className="code-line line-1" />
-                      <span className="code-line line-2" />
-                      <span className="code-line line-3" />
-                    </span>
-                    <span className="coder-body">
-                      <span className="coder-head" />
-                      <span className="coder-torso" />
-                      <span className="coder-arm left" />
-                      <span className="coder-arm right" />
-                    </span>
-                    <span className="typing-pulse" />
-                    <span className="coder-tag">
-                      <strong>{agent.name}</strong>
-                      <small>{task ? stateLabel(task.state) : 'Idle'}</small>
-                    </span>
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-
-          <aside className="side-panel">
-            <div className="agent-focus">
-              <div className="focus-head">
-                <div>
-                  <span className="mini-label">SELECTED AGENT</span>
-                  <h2>{selectedAgent.name}</h2>
-                </div>
-                <span className="role-pill">{selectedAgent.role}</span>
-              </div>
-              <p>{selectedAgent.vibe}</p>
-
-              <div className="status-box">
-                <div>
-                  <span>Status</span>
-                  <strong>{selectedTask ? stateLabel(selectedTask.state) : 'Idle'}</strong>
-                </div>
-                <div>
-                  <span>Current task</span>
-                  <strong>{selectedTask ? selectedTask.title : 'Waiting for a task'}</strong>
-                </div>
-                <div>
-                  <span>Progress</span>
-                  <strong>{selectedTask ? `${selectedTask.progress}%` : '0%'}</strong>
-                </div>
-              </div>
-              <div className="progress-bar">
-                <div style={{ width: `${selectedTask?.progress ?? 0}%` }} />
-              </div>
-            </div>
-
-            <div className="task-composer">
-              <span className="mini-label">QUICK REQUEST</span>
-              <input
-                value={draft}
-                onChange={(event) => setDraft(event.target.value)}
-                placeholder="Ask the team for a small update"
-              />
-              <div className="composer-row">
-                <select value={draftOwner} onChange={(event) => setDraftOwner(event.target.value as AgentId)}>
-                  {agents.map((agent) => (
-                    <option key={agent.id} value={agent.id}>
-                      {agent.name}
-                    </option>
-                  ))}
-                </select>
-                <button onClick={addTask}>Add</button>
-              </div>
-            </div>
-
-            <div className="activity-feed">
-              <span className="mini-label">ACTIVITY</span>
-              {activity.map((item) => (
-                <div className="activity-item" key={item}>
-                  <span className="activity-dot" />
-                  <p>{item}</p>
-                </div>
-              ))}
-            </div>
-          </aside>
-        </div>
-      </section>
-    </div>
-  )
-}
-
-function Desk({ xClass, label, tone, code }: { xClass: string; label: string; tone: 'warm' | 'cool' | 'violet'; code: string[] }) {
-  return (
-    <div className={`desk ${xClass}`}>
-      <div className="desk-label">{label}</div>
-      <div className="desk-top">
-        <div className={`desk-monitor ${tone}`}>
-          {code.map((line) => (
-            <span key={line}>{line}</span>
-          ))}
-        </div>
-        <div className="desk-keyboard" />
-        <div className="desk-mug" />
-      </div>
-    </div>
+          </form>
+          <h3>On the board <span>{tasks.filter(task => task.state === 'done').length}/{tasks.length} done</span></h3>
+          <ul className="task-list">{tasks.map(task => <li key={task.id}>
+            <button onClick={() => { setSelected(task.owner); setOverlay('agent') }}>
+              <span>{task.title}<small>{labelOf(task.owner)} · {stateLabel(task.state)}</small></span><strong>{task.progress}%</strong>
+            </button>
+          </li>)}</ul>
+          <h3>Office notes</h3>
+          <div className="activity-feed">{activity.map((item, index) => <p key={`${index}-${item}`}>{item}</p>)}</div>
+        </>}
+        {overlay === 'help' && <>
+          <p>A tiny office for big ideas. Everything here is a local simulation.</p>
+          <ul className="office-guide">
+            <li><strong>Teammates</strong> — click Kairo, Nyx, or Rune to select them and see their task.</li>
+            <li><strong>Desks</strong> — send your selected teammate to another workstation.</li>
+            <li><strong>Doors</strong> — visit Engineering, UI Lab, and QA Room.</li>
+            <li><strong>Task board</strong> — add requests, assign owners, and read office notes.</li>
+            <li><strong>Wall switch</strong> — pause or resume tasks, walking, and typing.</li>
+            <li><strong>Room nameplate</strong> — drag the office; use arrow keys when focused. Home or the center icon resets it.</li>
+          </ul>
+          <p className="interaction-hint">You can also Tab between objects and use Enter or Space. Escape closes these notes. Nothing here makes real AI calls or changes your repositories.</p>
+        </>}
+      </RoomDialog>}
+    </RoomScene>
   )
 }
 

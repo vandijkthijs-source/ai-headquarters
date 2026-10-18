@@ -2,6 +2,34 @@
 
 Record dated work, actual validation results, limitations, and next steps. Do not label planned or simulated work as completed execution.
 
+## 2026-10-18 — v0.3 room-only implementation
+
+### Completed
+
+- Implemented the approved room-only interface, removing surrounding dashboard chrome while retaining the existing local task engine and all task/selection/owner/progress/activity/pause functions through contextual room interactions.
+- Added code-native SVG pixel characters (16×24 source grid, 2× rectangles): Kairo's warm outfit, Nyx's blue headset, Rune's violet cap. Directional faces, discrete leg frames, typing hands, and animated monitor code follow movement/task/pause state. No raster generation, game framework, or new runtime dependency.
+- Added Engineering, UI Lab, and QA Room, reached through physical doors. They share a floor plan but have distinct labels, accents, server/design/test equipment, and persistent per-room equipment state. Task/character/movement state survives room switches.
+- Connected desk clicks to selected-character walking with station swaps and aisle routes. Autonomous desk rotation occurs after a rest period. Pause stops task progression, movement, and animation. Reduced-motion preference disables autonomous travel and resolves requested movement without walking animation.
+- Added bounded room dragging from its wall nameplate with pointer capture, mouse/touch, keyboard arrows, Home and a center icon. Resize listener is cleaned up.
+- Added accessible native dialogs for character details, task board, and guide. Controls have labels; dialogs support Escape, close/backdrop, and focus restoration. No persistent side panels are shown.
+- Applied verified vanDijkFit slate surfaces/blue actions, thin borders, rounded contextual panels, and system typography using the shared token file. Retained character-specific accents. Persistent room signage and contextual wording identify simulation; QA console explicitly says no real tests were run.
+- Updated package/lockfile version to 0.3.0, added `npm test`, and brought AGENTS.md, PROJECT.md, ROADMAP.md, README.md, and installation notes up to date. Historical snapshots are untouched.
+
+### Validation
+
+- `npm test` — 3 tests passed: desk routing/swaps and furniture clearance, 2,000 steps of autonomous movement with unique destinations, reduced-motion requests. Test code compiles the pure TypeScript module in memory with the existing TypeScript dependency.
+- `npm run lint` — passed.
+- `npm run build` — passed (TypeScript + Vite; 23 modules).
+- Headless Chrome via DevTools Protocol, against the real Vite app — passed: pause/resume, character details, Escape dismissal, task creation and Rune assignment, draft clearing/blank rejection, door navigation, UI preview interaction, task preservation across rooms, QA interaction, manual pair walking, paused positions unchanged, arrival at desks, actual pointer drag, Home/reset, keyboard movement/bounds, mobile fit, actual touch drag, mobile dialog fit, reduced-motion animation suppression. No runtime exceptions observed.
+- Browser harness is `/tmp/ai-hq-browser-regression.mjs`; screenshots inspected at `/tmp/ai-hq-v03-desktop.png`, `/tmp/ai-hq-v03-task-board.png`, and `/tmp/ai-hq-v03-mobile.png`. Browser Escape dispatch initially needed native key codes; walking verification initially waited less than a full path duration. Corrected the harness and reran successfully.
+- Source inspection and browser screenshots confirm the room is the complete visible app. Existing v0.2 is recoverable from Git baseline 5f19d70, and original before-* files remain unchanged.
+
+### Limits and next steps
+
+- App state is in memory and resets on reload. All rooms share the same walkable floor plan. Small labels scale down on phone-sized screens, although the scene fits and contextual dialogs are readable. Browser checks cover Chrome, not physical devices or other engines.
+- Review the local preview at http://localhost:5173/. Vite is running locally; no deployment occurred.
+- No remote configured, push, merge, deployment, or vanDijkFit modification. Save the verified implementation as a local checkpoint, then await visual feedback.
+
 ## 2026-10-18 — v0.3 foundation checkpoint
 
 - Confirmed the user's same-account choice means GitHub account vandijkthijs-source, with AI Headquarters separate from vanDijkFit. Read the author identity on the two public vanDijkFit commits and reused that exact name/privacy email in this repository's local Git configuration. No global Git setting or remote was changed.

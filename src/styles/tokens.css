@@ -38,6 +38,7 @@
   --hq-pressed-opacity: .96;
   --hq-disabled-opacity: .45;
   --hq-sprite-frame-duration: 280ms;
+  --hq-monitor-frame-duration: 1400ms;
   --hq-character-kairo: #ffb275;
   --hq-character-nyx: #78d7ff;
   --hq-character-rune: #b799ff;

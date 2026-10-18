@@ -1,14 +1,32 @@
 # AI Headquarters
 
-## Vision
+## Vision and current release
 
-An interactive miniature office that makes a team of characters feel present while keeping simulated behavior clearly distinct from real AI execution. The next proposed release, v0.3, adds true pixel-art characters, movement, richer coding animations, a draggable compact window, and interactive mini-rooms. Styling should take inspiration from vanDijkFit without modifying that project.
+AI Headquarters v0.3 is a playful, interactive miniature office using vanDijkFit's verified slate/blue design language. The room itself is the complete surface: no exterior dashboard, sidebar, or persistent task panels. Pixel-art Kairo, Nyx, and Rune walk between desks, and object interactions reveal contextual controls. All activity is explicitly local simulation.
 
-Latest approved direction (2026-10-18): build v0.3 as rooms only, with no surrounding dashboard or persistent sidebar. Characters, desks, doors, a wall task board, and a pause control provide the interaction surface. Task details/composer/activity appear contextually within the room. This supersedes earlier proposed exterior panels and room-tab navigation. Fresh local Git initialization is approved; the baseline commit awaits the user's commit identity.
+The user approved the room-only scope and a fresh, separate local Git repository on 2026-10-18. The repository uses the same observed commit identity as vandijkthijs-source, configured locally. No remote, push, merge, deployment, or vanDijkFit modification is authorized.
 
-## Inspected baseline — 2026-10-18
+## Current architecture — v0.3
 
-README-INSTALL.txt describes the current application as v0.2 compact widget. package.json still declares 0.0.0; this is a metadata discrepancy, not evidence of a released v0.3. README.md remains the Vite starter documentation.
+| Area | Implementation |
+| --- | --- |
+| Task state | src/App.tsx preserves the local task/progress/activity engine, owner assignment, selection, and pause; requests have UUIDs |
+| Room UI | src/components/RoomScene.tsx draws the room in SVG and owns room index, per-room object state, and selection interactions |
+| Characters | PixelCharacter.tsx maps a 16×24 pixel grid into crisp 2× SVG rectangles, with distinct hair/headset/hat and typing/walking frames; code-native art, no raster dependency |
+| Movement | hooks/officeMotion.ts contains pure waypoint steps, station swaps, and autonomous rotation; useOfficeMotion.ts provides a cleaned-up 50ms timer and reads reduced-motion preference |
+| Room navigation | In-scene doors switch Engineering, UI Lab, and QA Room; task and movement state survives room switches; all rooms share a floor plan with different names, equipment, and station labels |
+| Window movement | useRoomDrag.ts handles captured mouse/touch pointers, keyboard arrows, Home/reset, viewport clamping, and resize cleanup |
+| Contextual controls | RoomDialog.tsx uses native dialog modality, focus restoration, Escape, and close/backdrop handling; agent notes, task board, and guide appear only on interaction |
+| Design | styles/tokens.css owns the palette and shared spacing/radii/motion; App.css styles the scene and contextual UI; index.css sets the base canvas |
+| Checks | npm test: movement invariants; npm run lint; npm run build; browser checks recorded in DEVLOG.md |
+
+Object map: teammates open details/select; desks request movement; doors change rooms; task board opens request/assignment/activity; wall switch pauses/resumes; wall equipment toggles servers/design preview/simulated QA results; nameplate drags; center icon resets; floor '?' opens the guide. Simulation signage remains visible.
+
+Progress continues as local simulation independent of movement. Characters only type when stationary, running, and assigned a coding task. Animation never represents actual AI execution. State is in memory and resets on reload; there is no backend or real AI/GitHub integration.
+
+## Historical v0.2 baseline — inspected 2026-10-18
+
+At initial inspection README-INSTALL.txt described v0.2, package.json declared 0.0.0, and README.md was the Vite starter text. These files now describe v0.3. The following paragraphs record the pre-v0.3 baseline, not current behavior.
 
 The active app is a centered office window with three desks and selectable characters:
 
@@ -20,7 +38,7 @@ The active app is a centered office window with three desks and selectable chara
 
 Existing controls select a character, add a local task with an owner, and pause/resume simulation. The side panel shows task status, progress, and up to five activity messages. Characters are rounded CSS shapes at fixed positions, with arm, code-line, and typing-dot animations. They are not true pixel-art sprites and do not walk. The window is responsive but not draggable; there is one room.
 
-## Architecture
+## Historical v0.2 architecture
 
 | Area | Current implementation |
 | --- | --- |
@@ -33,28 +51,28 @@ Existing controls select a character, add a local task with an owner, and pause/
 | Assets | src/assets and public; current character visuals are CSS, not imported sprites |
 | Validation | npm run build: tsc -b and vite build; npm run lint: eslint . |
 
-There is no backend, AI provider, GitHub integration, routing library, persistence, or automated test script configured. State resets on reload. Monitor text and completion messages are decorative/simulated, not execution evidence. The current "Live coding" wording overstates this and should be corrected in the approved release.
+The baseline had no backend, AI provider, GitHub integration, routing library, persistence, or automated test script. Its "Live coding" wording was identified as overstating local simulation and has been replaced in v0.3. Backend/integration/persistence remain outside the current release; a movement test script is now available.
 
 Historical source and HTML snapshots live in src.before-ai-hq, src.before-compact-v2, and matching index.before-* files. They are not the active Vite entry and must be preserved.
 
 ## Decisions and constraints
 
 - Preserve the current React/TypeScript/Vite stack and existing interactions.
-- Keep this phase documentation-only; no application, dependency, configuration, or release-version changes.
-- Use incremental implementation after plan approval; no dashboard replacement.
+- v0.3 implementation is now approved; preserve task interactions through the room-only object interface.
+- Use focused local Git checkpoints; preserve historical snapshots and working task behavior. The approved room-only UI supersedes the old surrounding dashboard.
 - Keep simulation independent of presentation and any future real execution integration.
 - No push, merge, deployment, or vanDijkFit modification without explicit permission.
 - vanDijkFit is the primary design reference, inspected read-only on 2026-10-18 as detailed below. Keep AI Headquarters a separate project; no shared repository or dependency on its runtime.
 
-## Proposed technical direction (not yet approved)
+## Implemented technical direction
 
-Use small React components and CSS for the office, with locally stored pixel sprites or code-native pixel art on an integer grid. Keep sprite animation separate from movement transforms. Use room-local waypoints and a small movement state machine rather than a game engine initially. Add pointer-driven title-bar dragging with viewport bounds and keyboard/reset controls. Retain task/selection state across room switches. See ROADMAP.md for sequence and acceptance criteria.
+Small React components, SVG pixel art, and CSS implement the office without a game engine or new runtime dependencies. Room-local aisle waypoints separate movement from task progress. Pointer/keyboard dragging stays bounded; tasks, selection, and room equipment state survive room switches. Historical references below remain design provenance; actual current behavior is described above.
 
 ## Baseline limitations
 
-Build and lint now pass following the separately authorized lint fixes. Task progress and completion messages update together in the simulation timer, reporting each newly completed task once. Character animation still follows the global running flag rather than actual task state. Input/select labels and reduced-motion behavior need review. These are inspection findings, not browser-tested defects.
+Build and lint pass; original lint errors and completion deduplication were fixed before v0.3. Fresh local Git checkpoints are available; the baseline is 5f19d70. See DEVLOG.md for later checkpoints and validation.
 
-The current environment has no .git directory and is not recognized as a Git repository; the earlier restricted environment showed an empty protected directory. No history or checkpoint could be verified or created. Choose recovery of existing history or approve fresh local initialization before implementation; do not delete metadata, use sudo, or change permissions without approval.
+Room layouts intentionally share a floor plan; three different pieces of interactive equipment and station themes distinguish them. Narrow layouts scale the scene to fit; character labels and small signs are correspondingly small. Core interactions have keyboard access and a contextual guide. There is no persistence or real AI execution.
 
 ## Primary design reference — inspected 2026-10-18
 
@@ -108,18 +126,18 @@ Values below come from constants/theme.ts. Native numeric sizes elsewhere are la
 - Logo purple is a secondary asset color; the inspected interface palette uses blue for primary actions. Do not infer a purple gradient interface from the logo.
 - Theme usage is not perfectly uniform: AppText has a hard-coded default color, HapticTab imports the static dark colors alias, and compatibility Colors.light.tint uses that alias. Follow the dynamic semantic palette used by core screens rather than copying these inconsistencies.
 
-### Adaptation principles for AI Headquarters (proposed)
+### Adaptation principles for AI Headquarters
 
 - Carry slate panels, blue selected/actions, thin borders, 18/24 radii, native-style sans typography, and clear metric hierarchy into the window chrome, request composer, activity panels, and room navigation.
 - Keep Kairo, Nyx, Rune, their distinguishing character accents, walking, typing, and playful room contents. Pixel art stays on its own integer grid with crisp rendering; panel radii do not round sprite pixels.
-- Use labeled compact room tabs with clear blue active states, borrowing the navigation hierarchy without importing mobile routing or workout features.
+- Use physical labeled doors for room navigation, per the superseding room-only scope. Blue action cues carry the reference hierarchy without importing mobile routing or workout features.
 - Use brief state transitions and subtle press feedback for controls; keep sprite frame timing separate from smooth window movement. Support reduced motion and keyboard interaction as web-specific requirements.
 - Design around the existing compact window; preserve all current controls and state. Distinguish simulated status from real execution throughout.
 - Evaluate text/control contrast in the web context rather than assuming every source color pairing is accessible unchanged.
 
-## Shared design-token contract — proposed, not implemented
+## Shared design tokens — implemented foundation
 
-Shared means consistent across AI Headquarters components and rooms. No shared package or edits in vanDijkFit are proposed. After Git setup and explicit redesign approval, create a single local `src/styles/tokens.css` source of truth, imported once; use CSS custom properties for component styling. React reads shared CSS motion values only when JavaScript needs them, avoiding duplicate numeric constants.
+Shared means consistent across AI Headquarters components and rooms. No shared package or edits in vanDijkFit are proposed. `src/styles/tokens.css` is the single local source of truth, imported once by App.css. CSS custom properties style the rooms and dialogs. Movement speed and simulation ticks remain behavior constants in their respective modules; sprite/monitor animation timing uses tokens.
 
 | Family | Proposed tokens/defaults | Provenance |
 | --- | --- | --- |
@@ -131,4 +149,4 @@ Shared means consistent across AI Headquarters components and rooms. No shared p
 | Motion | `--hq-motion-fast`: 140ms; `--hq-motion-reorder`: 170ms; `--hq-motion-window`: 340ms; `--hq-ease-window`: cubic-bezier(.65,0,.35,1) | Durations observed; CSS cubic-bezier is a proposed approximation of native cubic in-out |
 | Pixel office | `--hq-sprite-scale`, `--hq-sprite-frame-duration`, `--hq-room-tile-size`, `--hq-character-kairo/nyx/rune` | Office-specific proposed tokens; tune during approved sprite/movement work, not claimed as vanDijkFit values |
 
-Introduce tokens first without restyling existing components, then apply them in reviewed slices. Centralize UI transition timings; honor reduced motion and simulation pause independently. The 2.4-second simulated task tick is application behavior, not a visual animation token. No token file or redesign code is introduced in this documentation phase.
+Tokens were introduced in a foundation checkpoint, then consumed by the room UI. Reduced motion and simulation pause are independent. The 2.4-second task tick is application behavior, not a visual animation token. Token names in the contract are design roles; exact implemented declarations are in src/styles/tokens.css. Sprite geometry uses a fixed 2× internal grid rather than a CSS scale token. A theme toggle is not included; only dark mode is exposed.

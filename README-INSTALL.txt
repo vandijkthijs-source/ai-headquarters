@@ -1,10 +1,14 @@
-AI Headquarters v0.2 compact widget
+AI Headquarters v0.3 — interactive pixel office
 
-This version replaces the full dashboard with a compact interactive office window.
+From this project folder:
+  npm install
+  npm run dev
+Open the Local URL printed in the terminal.
 
-Changes:
-- removes the outer rail and extra dashboard chrome
-- keeps a single compact “little window” UI
-- gives the characters cooler names: Kairo, Nyx, Rune
-- makes them look like they are really coding with typing / code animations
-- keeps the office interactive: click agents, add a request, pause/live toggle
+Click a teammate for details, a desk to walk, a door to switch rooms,
+or the wall task board to add requests and see activity.
+The wall switch pauses the simulation. Drag the room nameplate to move it.
+The ? sign opens the full guide. Escape closes contextual notes.
+
+Everything in the office is a local simulation. No AI calls or repository
+changes happen through the app. Existing src.before-* snapshots are preserved.
