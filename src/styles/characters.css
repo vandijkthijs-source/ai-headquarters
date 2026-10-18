@@ -1,0 +1,60 @@
+.character-name {
+  fill: var(--hq-color-text);
+  paint-order: stroke;
+  stroke: var(--hq-color-panel-strong);
+  stroke-width: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .3px;
+}
+
+.selected .character-name {
+  fill: var(--hq-color-accent);
+}
+
+.pixel-person.walking .pixel-leg-left {
+  animation: pixel-step var(--hq-sprite-frame-duration) steps(2, end) infinite alternate;
+}
+
+.pixel-person.walking .pixel-leg-right {
+  animation: pixel-step var(--hq-sprite-frame-duration) steps(2, end) infinite alternate-reverse;
+}
+
+.pixel-person.typing .pixel-hands {
+  animation: pixel-type var(--hq-sprite-frame-duration) steps(2, end) infinite;
+}
+
+.desk-coding .screen-code {
+  animation: code-type var(--hq-monitor-frame-duration) steps(3, end) infinite;
+  stroke-dasharray: 34;
+}
+
+@keyframes pixel-step {
+  from {
+    transform: translateY(-2px);
+  }
+
+  to {
+    transform: translateY(2px);
+  }
+}
+
+@keyframes pixel-type {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes code-type {
+  0% {
+    stroke-dashoffset: 28;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
+}

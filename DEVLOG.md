@@ -2,6 +2,16 @@
 
 Record dated work, actual validation results, limitations, and next steps. Do not label planned or simulated work as completed execution.
 
+## 2026-10-18 — small-file refactor, checkpoint 3: styles and edit map
+
+- Replaced dense App.css rules with an import manifest and focused, multiline stylesheets: base, room layout/interactions, room signage, characters/animations, dialogs, task status, composer, and task list/activity. index.css imports the base styles. Shared values remain in tokens.css. Original declarations and effective cascade are preserved, including mobile overrides and reduced motion.
+- Completed the approved folder split: characters, rooms/objects, tasks, ui, hooks, and styles. App.tsx is 67 lines; RoomScene.tsx is about 100. The largest focused source file is dialogs.css at 124 readable lines; smaller components/data remain cohesive instead of adding artificial padding.
+- Updated PROJECT.md with the current architecture and an editing map; AGENTS.md now records the one-responsibility/small-file convention, readable formatting, and correct paths. README/ROADMAP point to the completed organization.
+- `npm test` (3 tests), `npm run lint`, and `npm run build` passed after the style split. The complete Chrome regression harness passed again, including mouse/touch/keyboard dragging, room navigation, task creation/ownership, dialogs, pause/walking, mobile fit, and reduced motion; no runtime exceptions.
+- All three room screenshots remained identical to the original pre-refactor baseline. The style-split guide screenshot also matches the room-extraction guide screenshot pixel-for-pixel; the earlier baseline difference was confined to the close button's focus ring.
+- Checkpoints before this final slice: task/dialog extraction `eb1d631`, room/object extraction `6d4841d`. Only project code/docs changed; dependencies, version, historical snapshots, and vanDijkFit are untouched. No push, merge, deployment, or remote changes.
+- Refactor complete. Next steps are normal feature/visual edits using the PROJECT.md map; browser appearance should remain unchanged by this work. App state still resets on refresh as before.
+
 ## 2026-10-18 — small-file refactor, checkpoint 2: rooms and objects
 
 - Moved room configuration, shell, decor, footer, and individual desks/doors/board/equipment/nameplate/pause/plant objects into src/rooms. Moved pixel artwork and character placement into src/characters; extracted accessible SVG ObjectButton into src/ui.

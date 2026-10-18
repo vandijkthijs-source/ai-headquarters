@@ -1,0 +1,78 @@
+.app {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: var(--hq-space-2);
+}
+
+.hq-window {
+  width: min(840px, calc(100vw - 16px), calc((100svh - 16px) * 1.46));
+  position: relative;
+  touch-action: auto;
+}
+
+.office-scene {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  font-family: var(--hq-font);
+  user-select: none;
+}
+
+.office-scene text {
+  pointer-events: none;
+}
+
+.room-object {
+  cursor: pointer;
+  outline: none;
+}
+
+.object-outline {
+  stroke: transparent;
+  stroke-width: 2;
+  transition: stroke var(--hq-motion-fast);
+}
+
+.room-object:hover .object-outline, .room-object:focus-visible .object-outline {
+  stroke: var(--hq-color-accent);
+}
+
+.room-object:hover {
+  filter: brightness(1.1);
+}
+
+.room-object:focus-visible .character-target {
+  stroke: var(--hq-color-accent);
+  stroke-width: 2;
+}
+
+.room-object:focus-visible {
+  outline: none;
+}
+
+.room-drag {
+  touch-action: none;
+  cursor: grab;
+  outline: none;
+}
+
+.room-drag:active {
+  cursor: grabbing;
+}
+
+.room-drag:hover .object-outline, .room-drag:focus-visible .object-outline {
+  stroke: var(--hq-color-accent);
+}
+
+.paused *, .paused *::before {
+  animation-play-state: paused !important;
+}
+
+@media (max-width: 480px) {
+  .hq-window {
+    width: min(calc(100vw - 8px), calc((100svh - 16px) * 1.46));
+  }
+}

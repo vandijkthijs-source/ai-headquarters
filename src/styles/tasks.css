@@ -1,0 +1,48 @@
+.status-box {
+  display: grid;
+  gap: var(--hq-space-3);
+  padding: var(--hq-space-5);
+  border: var(--hq-border-width) solid var(--hq-color-border);
+  border-radius: var(--hq-radius-md);
+  background: var(--hq-color-background-alt);
+  margin-top: var(--hq-space-5);
+}
+
+.status-box > span {
+  font-size: 11px;
+  color: var(--hq-color-text-muted);
+}
+
+.status-box > strong {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+progress {
+  width: 100%;
+  height: 6px;
+  border: 0;
+  background: var(--hq-color-panel-strong);
+  border-radius: var(--hq-radius-pill);
+  overflow: hidden;
+  accent-color: var(--hq-color-accent);
+}
+
+progress::-webkit-progress-bar {
+  background: var(--hq-color-panel-strong);
+}
+
+progress::-webkit-progress-value {
+  background: var(--hq-color-accent);
+}
+
+progress::-moz-progress-bar {
+  background: var(--hq-color-accent);
+}

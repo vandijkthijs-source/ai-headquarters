@@ -1,0 +1,124 @@
+.room-dialog {
+  width: min(420px, calc(100vw - 24px));
+  max-height: min(580px, calc(100svh - 32px));
+  padding: 0;
+  border: var(--hq-border-width) solid var(--hq-color-border);
+  border-radius: var(--hq-radius-lg);
+  background: var(--hq-color-panel);
+  color: var(--hq-color-text);
+  box-shadow: 0 24px 80px rgb(0 0 0 / 40%);
+  font-family: var(--hq-font);
+}
+
+.room-dialog::backdrop {
+  background: rgb(13 19 26 / 55%);
+  backdrop-filter: blur(3px);
+}
+
+.dialog-content {
+  padding: var(--hq-space-7);
+}
+
+.dialog-content header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--hq-space-3);
+  margin-bottom: var(--hq-space-6);
+}
+
+.dialog-content h2 {
+  font-size: 23px;
+  line-height: 1.2;
+  margin: 6px 0 0;
+  letter-spacing: -.5px;
+}
+
+.dialog-content h3 {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--hq-space-2);
+  margin: var(--hq-space-7) 0 var(--hq-space-3);
+  font-size: 14px;
+}
+
+.dialog-content h3 span {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--hq-color-text-muted);
+}
+
+.dialog-content p {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--hq-color-text-muted);
+}
+
+.close-dialog {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  background: var(--hq-color-panel-muted);
+  color: var(--hq-color-text);
+  border: 0;
+  border-radius: 50%;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.mini-label {
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 1.3px;
+  color: var(--hq-color-text-muted);
+}
+
+.role-pill {
+  display: inline-block;
+  background: var(--hq-color-accent-soft);
+  color: var(--hq-color-accent);
+  border-radius: var(--hq-radius-pill);
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.primary-button {
+  background: var(--hq-color-accent);
+  color: var(--hq-color-panel-strong);
+  font-weight: 750;
+  font-size: 13px;
+  border: 0;
+  border-radius: var(--hq-radius-sm);
+  padding: var(--hq-space-4) var(--hq-space-5);
+  transition: opacity var(--hq-motion-fast);
+}
+
+.primary-button:active {
+  opacity: var(--hq-pressed-opacity);
+}
+
+.office-guide {
+  padding-left: var(--hq-space-6);
+  color: var(--hq-color-text-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.office-guide li + li {
+  margin-top: var(--hq-space-2);
+}
+
+.office-guide strong {
+  color: var(--hq-color-text);
+}
+
+.interaction-hint {
+  font-size: 12px !important;
+}
+
+@media (max-width: 480px) {
+  .dialog-content {
+    padding: var(--hq-space-6);
+  }
+}

@@ -20,7 +20,10 @@
 ## Technical conventions
 
 - React + TypeScript + Vite; npm and package-lock.json are the existing toolchain.
-- Task state: src/App.tsx; room visuals/dialogs/sprites: src/components; movement and drag: src/hooks; tokens: src/styles/tokens.css; bootstrap: src/main.tsx.
+- App.tsx connects the features. Character data/art/placement: src/characters; task state and dialog contents: src/tasks; room configuration/artwork/objects: src/rooms; shared controls/dialog shell/guide: src/ui; movement and drag: src/hooks; styling: src/styles; bootstrap: src/main.tsx.
+- Work in small, focused files with one main responsibility. Aim for roughly 40–120 readable lines when practical; shorter data/components are fine. Split by independently editable behavior or artwork rather than an arbitrary line limit. Do not compress code to meet a line count.
+- Add room objects under src/rooms/objects and compose them in RoomScene. Keep SVG drawing order, accessible labels, and focus/keyboard behavior intact during extraction.
+- Keep styles readable with one declaration per line. Edit the focused stylesheet for the feature; App.css/index.css are import entry points. Keep shared design values in styles/tokens.css. PROJECT.md contains the editing map.
 - Keep TypeScript strict and retain effect cleanup for timers and future event listeners.
 - Extract small components or hooks only as needed for an approved feature.
 - Keep controls accessible by keyboard, provide meaningful labels, support narrow screens and reduced motion in new interactions.

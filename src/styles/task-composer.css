@@ -1,0 +1,37 @@
+.task-composer {
+  display: grid;
+  gap: var(--hq-space-2);
+}
+
+.task-composer label {
+  color: var(--hq-color-text-muted);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.task-composer input, .task-composer select {
+  min-width: 0;
+  width: 100%;
+  background: var(--hq-color-input);
+  color: var(--hq-color-text);
+  border: var(--hq-border-width) solid var(--hq-color-border);
+  border-radius: var(--hq-radius-sm);
+  padding: var(--hq-space-3);
+  font-size: 14px;
+}
+
+.task-composer input::placeholder {
+  color: var(--hq-color-text-muted);
+}
+
+.composer-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--hq-space-2);
+}
+
+@media (max-width: 480px) {
+  .task-composer input, .task-composer select {
+    font-size: 16px;
+  }
+}

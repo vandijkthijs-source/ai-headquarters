@@ -10,19 +10,52 @@ The user approved the room-only scope and a fresh, separate local Git repository
 
 | Area | Implementation |
 | --- | --- |
-| Task state | src/App.tsx preserves the local task/progress/activity engine, owner assignment, selection, and pause; requests have UUIDs |
-| Room UI | src/components/RoomScene.tsx draws the room in SVG and owns room index, per-room object state, and selection interactions |
-| Characters | PixelCharacter.tsx maps a 16×24 pixel grid into crisp 2× SVG rectangles, with distinct hair/headset/hat and typing/walking frames; code-native art, no raster dependency |
+| App wiring | src/App.tsx connects features and owns selection, pause, and active overlay; it is 67 lines after the small-file refactor |
+| Task state | tasks/useTaskSimulation.ts owns task progress/completions, request drafts, assignment, and activity; requests have UUIDs; types/fixtures have their own modules |
+| Room UI | rooms/RoomScene.tsx owns room state and assembles RoomShell, RoomDecor, RoomFooter, individual objects, and the character layer in the existing SVG drawing order |
+| Characters | characters/characters.ts defines names/roles/colors; PixelCharacter.tsx draws a 16×24 pixel grid in 2× SVG rectangles; CharacterLayer.tsx handles depth, placement, and selection |
 | Movement | hooks/officeMotion.ts contains pure waypoint steps, station swaps, and autonomous rotation; useOfficeMotion.ts provides a cleaned-up 50ms timer and reads reduced-motion preference |
 | Room navigation | In-scene doors switch Engineering, UI Lab, and QA Room; task and movement state survives room switches; all rooms share a floor plan with different names, equipment, and station labels |
 | Window movement | useRoomDrag.ts handles captured mouse/touch pointers, keyboard arrows, Home/reset, viewport clamping, and resize cleanup |
-| Contextual controls | RoomDialog.tsx uses native dialog modality, focus restoration, Escape, and close/backdrop handling; agent notes, task board, and guide appear only on interaction |
-| Design | styles/tokens.css owns the palette and shared spacing/radii/motion; App.css styles the scene and contextual UI; index.css sets the base canvas |
+| Contextual controls | ui/RoomDialog.tsx retains the shared native modal shell and focus lifecycle; tasks/AgentDetailsDialog.tsx and TaskBoardDialog.tsx supply view contents; ui/OfficeGuide.tsx provides instructions |
+| Design | styles/tokens.css owns shared values. App.css/index.css import the focused base/room/sign/character/dialog/task stylesheets |
 | Checks | npm test: movement invariants; npm run lint; npm run build; browser checks recorded in DEVLOG.md |
 
 Object map: teammates open details/select; desks request movement; doors change rooms; task board opens request/assignment/activity; wall switch pauses/resumes; wall equipment toggles servers/design preview/simulated QA results; nameplate drags; center icon resets; floor '?' opens the guide. Simulation signage remains visible.
 
 Progress continues as local simulation independent of movement. Characters only type when stationary, running, and assigned a coding task. Animation never represents actual AI execution. State is in memory and resets on reload; there is no backend or real AI/GitHub integration.
+
+## Editing map — small files
+
+Use one main responsibility per file, usually 40–120 readable lines. Small fixtures/helpers can be shorter. The range is a guide, not a reason to split cohesive code or compress JSX/CSS. Import files directly; no extra state library or dependency is needed.
+
+| To change… | Edit… |
+| --- | --- |
+| Application wiring or which note opens | src/App.tsx |
+| Character names, roles, colors | src/characters/characters.ts |
+| Pixel artwork | src/characters/PixelCharacter.tsx |
+| Character placement, selection marker, depth sorting | src/characters/CharacterLayer.tsx |
+| Room names, station labels, accent and equipment metadata | src/rooms/rooms.ts |
+| Room composition and interaction coordination | src/rooms/RoomScene.tsx |
+| Walls, floor, night window | src/rooms/RoomShell.tsx |
+| Plants, rug, furniture | src/rooms/RoomDecor.tsx and objects/Plant.tsx |
+| Desk/door/board/equipment/nameplate/pause artwork | Corresponding named component in src/rooms/objects |
+| Guide button and simulation signage | src/rooms/RoomFooter.tsx |
+| Progress, completion, request draft, activity behavior | src/tasks/useTaskSimulation.ts |
+| Task types, state labels, initial demo tasks | src/tasks/types.ts and starterTasks.ts |
+| Request form, task list, office notes | src/tasks/TaskComposer.tsx, TaskList.tsx, ActivityFeed.tsx |
+| Agent/task-board view composition | src/tasks/AgentDetailsDialog.tsx and TaskBoardDialog.tsx |
+| Modal behavior, accessible SVG clicks, guide text | src/ui/RoomDialog.tsx, ObjectButton.tsx, OfficeGuide.tsx |
+| Walking rules or window dragging | src/hooks/officeMotion.ts, useOfficeMotion.ts, useRoomDrag.ts |
+| Shared palette, spacing, radii, timing | src/styles/tokens.css |
+| Page/reset/accessibility styles | src/styles/base.css |
+| Room layout and object focus/hover | src/styles/room.css |
+| Room labels and signs | src/styles/room-signs.css |
+| Character names and pixel/monitor animations | src/styles/characters.css |
+| Contextual panel layout and guide styles | src/styles/dialogs.css |
+| Task status/progress, composer, list/activity styles | src/styles/tasks.css, task-composer.css, task-list.css |
+
+Keep task state in its hook, movement in its hook, and shared native modal state in the existing shell. Extract visual objects without changing SVG order. Keep the narrow-screen and reduced-motion rules with their relevant styles. App.css and index.css are style import manifests, not places to accumulate new rules.
 
 ## Historical v0.2 baseline — inspected 2026-10-18
 

@@ -26,6 +26,8 @@ Primary design reference: [vanDijkFit](https://github.com/vandijkthijs-source/va
 
 ### User review / possible follow-ups
 
+- Completed the approved small-file refactor: task state/dialogs, editable room objects/character layer, then focused readable stylesheets. Appearance and interaction behavior are preserved. PROJECT.md provides the editing map; AGENTS.md records the conventions.
+
 - Review character proportions, room size, movement speed, and visual density in the running browser preview.
 - Consider distinct floor plans per room, additional props, more character frames, and richer directional silhouettes after feedback.
 - Small room signs scale down on narrow screens. Further phone-specific zoom or larger object hit areas may be useful; the scene currently fits and contextual dialogs remain readable.

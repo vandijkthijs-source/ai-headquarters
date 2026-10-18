@@ -25,4 +25,6 @@ npm run build
 
 Project decisions: [PROJECT.md](PROJECT.md). Planned work: [ROADMAP.md](ROADMAP.md). Changes and verification: [DEVLOG.md](DEVLOG.md). Agent rules: [AGENTS.md](AGENTS.md).
 
+For small edits, see the **Editing map** in PROJECT.md. Code is grouped into `src/characters`, `src/rooms`, `src/tasks`, `src/ui`, `src/hooks`, and `src/styles`. `App.tsx` connects them; the `src.before-*` folders are historical snapshots.
+
 vanDijkFit is a read-only design reference. AI Headquarters stays in its own repository. Publishing requires explicit permission.
