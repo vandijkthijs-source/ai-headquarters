@@ -2,6 +2,14 @@
 
 Record dated work, actual validation results, limitations, and next steps. Do not label planned or simulated work as completed execution.
 
+## 2026-10-18 — small-file refactor, checkpoint 1: tasks and dialogs
+
+- Started from clean checkpoint `7aa3c43`. Captured deterministic paused-room/guide browser screenshots before editing for later visual comparison.
+- Split character data, task types/fixtures, task simulation, composer, list, activity feed, and agent/board dialog contents into named modules. Moved the shared dialog and office guide into src/ui. App.tsx is now 67 lines and connects these pieces.
+- Kept the native dialog shell mounted across view switches, draft lifetime, timer cleanup, task progress/completion logic, UI text, classes, and behavior unchanged. No dependency or snapshot changes.
+- `npm test` (3 movement tests), `npm run lint`, and `npm run build` passed. Existing real Chrome regression checks passed for tasks/owners, dialogs/Escape, rooms/equipment, pause/walking/arrival, pointer/touch dragging, keyboard bounds/reset, mobile fit, and reduced motion; no runtime exceptions.
+- Next: extract room artwork/objects and character placement, then split styles while preserving cascade and values.
+
 ## 2026-10-18 — v0.3 room-only implementation
 
 ### Completed
