@@ -2,6 +2,16 @@
 
 Record dated work, actual validation results, limitations, and next steps. Do not label planned or simulated work as completed execution.
 
+## 2026-10-18 — GitHub publishing requested, awaiting authenticated publishing access
+
+- User explicitly requested publishing this project to GitHub. This authorizes the initial creation/push of a separate AI Headquarters repository under the previously confirmed vandijkthijs-source account; it does not authorize deployment or changes to vanDijkFit.
+- Working tree was clean at `0659335`, with all seven existing local checkpoints present and no remote configured. Inspected tracked files; dependencies/generated build output are ignored.
+- `npm test` (3 tests), `npm run lint`, and `npm run build` passed again. No application source changes.
+- Confirmed connected GitHub identity is vandijkthijs-source. Lookup of vandijkthijs-source/ai-headquarters returned 404 (absent or unavailable to the connection).
+- The installed GitHub connector has file/commit tools but no repository-creation operation. Plugin discovery found the same installed GitHub integration, with no alternate publishing connection. Local gh CLI is absent, no credential helper is configured, and standard GitHub token/askpass environment variables are not set. No credentials were printed or requested in chat.
+- Publishing is blocked on user authentication/repository creation. The simplest route is VS Code Source Control → Publish Branch / Publish to GitHub → sign in as vandijkthijs-source → choose a separate private ai-headquarters repository. This preserves the local commit history through normal Git publishing.
+- No GitHub repository was created, no remote was added, and nothing was pushed, merged, or deployed in this attempt. Next: complete authenticated publishing, then verify the actual repository URL and remote commit.
+
 ## 2026-10-18 — small-file refactor, checkpoint 3: styles and edit map
 
 - Replaced dense App.css rules with an import manifest and focused, multiline stylesheets: base, room layout/interactions, room signage, characters/animations, dialogs, task status, composer, and task list/activity. index.css imports the base styles. Shared values remain in tokens.css. Original declarations and effective cascade are preserved, including mobile overrides and reduced motion.

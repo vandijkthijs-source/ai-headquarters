@@ -42,4 +42,4 @@ Primary design reference: [vanDijkFit](https://github.com/vandijkthijs-source/va
 
 ## Boundaries
 
-AI Headquarters remains separate from vanDijkFit. No push, merge, deployment, remote repository creation, or vanDijkFit modification is authorized. Local v0.3 implementation is complete and reviewable; publishing still needs explicit user permission.
+AI Headquarters remains separate from vanDijkFit. The user has now authorized its initial GitHub repository creation/push under vandijkthijs-source; publishing awaits authenticated access (see DEVLOG.md). Merge, deployment, and vanDijkFit modifications remain unauthorized. Future publishing beyond this initial upload requires the user's instructions.
