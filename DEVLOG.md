@@ -28,7 +28,7 @@ Record dated work, actual validation results, limitations, and next steps. Do no
 
 - App state is in memory and resets on reload. All rooms share the same walkable floor plan. Small labels scale down on phone-sized screens, although the scene fits and contextual dialogs are readable. Browser checks cover Chrome, not physical devices or other engines.
 - Review the local preview at http://localhost:5173/. Vite is running locally; no deployment occurred.
-- No remote configured, push, merge, deployment, or vanDijkFit modification. Save the verified implementation as a local checkpoint, then await visual feedback.
+- Verified implementation saved as local checkpoint `b96486b`; `git diff --cached --check` passed and the working tree was clean after committing. No remote configured, push, merge, deployment, or vanDijkFit modification. Await visual feedback.
 
 ## 2026-10-18 — v0.3 foundation checkpoint
 
