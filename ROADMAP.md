@@ -16,7 +16,7 @@ Primary design reference: [vanDijkFit](https://github.com/vandijkthijs-source/va
 ### Completed v0.3 scope
 
 - True code-native pixel-art Kairo, Nyx, and Rune with distinct hair/headset/hat, directional faces, walking legs, and typing hands. The implemented source grid is 16×24 at 2×, refining the initially proposed 24×24 square frames.
-- Compact room scene draggable through its wall nameplate, with pointer capture, mouse/touch input, keyboard arrows, Home/reset, viewport bounds, and resize cleanup.
+- Room scene fills the browser by default; an in-room size icon switches to a compact draggable mini window. Mini mode supports pointer capture, mouse/touch, keyboard arrows, Home/reset, viewport bounds, and resize cleanup.
 - Manual desk-to-desk walking and autonomous workstation visits through aisle waypoints. Requests atomically swap destinations; typing stops during walking and pause.
 - Engineering, UI Lab, and QA Room, reached through in-room doors. Shared floor plan; distinct station labels, accent cues, and interactive equipment. Server lights, design preview, and explicitly simulated QA results each retain room-local state.
 - Preserved task creation/ownership, character selection, progress, activity feed, and pause/resume in object-triggered dialogs. Added labels, native dialog focus containment, Escape/close, keyboard-operated room objects, and a contextual guide.

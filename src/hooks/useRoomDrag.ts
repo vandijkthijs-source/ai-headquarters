@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { KeyboardEvent, PointerEvent } from 'react'
 import type { Point } from './officeMotion'
 
-export function useRoomDrag() {
+export function useRoomDrag(enabled = true) {
   const windowRef = useRef<HTMLElement>(null)
   const [offset, setOffset] = useState<Point>({ x: 0, y: 0 })
   const drag = useRef<{ id: number; pointer: Point; origin: Point } | null>(null)
@@ -25,7 +25,7 @@ export function useRoomDrag() {
   }, [])
 
   function onPointerDown(event: PointerEvent<SVGGElement>) {
-    if (event.button !== 0) return
+    if (!enabled || event.button !== 0) return
     event.preventDefault()
     event.currentTarget.focus()
     event.currentTarget.setPointerCapture(event.pointerId)
@@ -45,6 +45,7 @@ export function useRoomDrag() {
     if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId)
   }
   function onKeyDown(event: KeyboardEvent<SVGGElement>) {
+    if (!enabled) return
     const directions: Record<string, Point> = {
       ArrowLeft: { x: -16, y: 0 }, ArrowRight: { x: 16, y: 0 },
       ArrowUp: { x: 0, y: -16 }, ArrowDown: { x: 0, y: 16 },

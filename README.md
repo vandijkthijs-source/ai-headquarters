@@ -14,7 +14,8 @@ Open the Local URL shown in the terminal (usually http://localhost:5173).
 - Click a **door** to visit Engineering, UI Lab, or QA Room.
 - Click the **task board** to add/assign requests and read activity.
 - Click the **wall switch** to pause or resume.
-- Drag the **room nameplate** to move the office; arrow keys work when focused. Home or the center icon resets it.
+- The office fills the browser by default. Use the **window-size icon** next to the nameplate to switch to a mini window or back.
+- In mini mode, drag the **room nameplate** to move the office; arrow keys work when focused. Home or the center icon resets it.
 - Click **?** for the guide. Tab and Enter/Space operate room objects; Escape closes notes.
 
 ```bash

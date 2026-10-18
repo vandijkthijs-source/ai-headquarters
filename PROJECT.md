@@ -4,6 +4,8 @@
 
 AI Headquarters v0.3 is a playful, interactive miniature office using vanDijkFit's verified slate/blue design language. The room itself is the complete surface: no exterior dashboard, sidebar, or persistent task panels. Pixel-art Kairo, Nyx, and Rune walk between desks, and object interactions reveal contextual controls. All activity is explicitly local simulation.
 
+The latest sizing correction makes the office fill the browser area by default, preserving the artwork's proportions. An in-room window-size icon switches to the optional compact draggable mode and back. Mode changes preserve tasks, selection, room equipment, and the active room; returning to mini mode starts centered.
+
 The user approved the room-only scope and a fresh, separate local Git repository on 2026-10-18. The repository uses the same observed commit identity as vandijkthijs-source, configured locally. No remote, push, merge, deployment, or vanDijkFit modification is authorized.
 
 ## Current architecture — v0.3
@@ -16,7 +18,7 @@ The user approved the room-only scope and a fresh, separate local Git repository
 | Characters | characters/characters.ts defines names/roles/colors; PixelCharacter.tsx draws a 16×24 pixel grid in 2× SVG rectangles; CharacterLayer.tsx handles depth, placement, and selection |
 | Movement | hooks/officeMotion.ts contains pure waypoint steps, station swaps, and autonomous rotation; useOfficeMotion.ts provides a cleaned-up 50ms timer and reads reduced-motion preference |
 | Room navigation | In-scene doors switch Engineering, UI Lab, and QA Room; task and movement state survives room switches; all rooms share a floor plan with different names, equipment, and station labels |
-| Window movement | useRoomDrag.ts handles captured mouse/touch pointers, keyboard arrows, Home/reset, viewport clamping, and resize cleanup |
+| Window sizing/movement | RoomScene owns full-browser/mini mode. useRoomDrag.ts handles captured mouse/touch pointers, keyboard arrows, Home/reset, viewport clamping, and resize cleanup in mini mode |
 | Contextual controls | ui/RoomDialog.tsx retains the shared native modal shell and focus lifecycle; tasks/AgentDetailsDialog.tsx and TaskBoardDialog.tsx supply view contents; ui/OfficeGuide.tsx provides instructions |
 | Design | styles/tokens.css owns shared values. App.css/index.css import the focused base/room/sign/character/dialog/task stylesheets |
 | Checks | npm test: movement invariants; npm run lint; npm run build; browser checks recorded in DEVLOG.md |

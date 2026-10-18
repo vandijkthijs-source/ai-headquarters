@@ -3,12 +3,26 @@
   display: grid;
   place-items: center;
   overflow: hidden;
-  padding: var(--hq-space-2);
+  padding: 0;
 }
 
 .hq-window {
   width: min(840px, calc(100vw - 16px), calc((100svh - 16px) * 1.46));
   position: relative;
+  touch-action: auto;
+}
+
+.hq-window.expanded {
+  width: 100vw;
+  height: 100dvh;
+}
+
+.hq-window.expanded .office-scene {
+  height: 100%;
+}
+
+.hq-window.expanded .room-drag {
+  cursor: default;
   touch-action: auto;
 }
 

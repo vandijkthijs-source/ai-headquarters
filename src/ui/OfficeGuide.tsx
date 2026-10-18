@@ -8,7 +8,8 @@ export default function OfficeGuide() {
         <li><strong>Doors</strong> — visit Engineering, UI Lab, and QA Room.</li>
         <li><strong>Task board</strong> — add requests, assign owners, and read office notes.</li>
         <li><strong>Wall switch</strong> — pause or resume tasks, walking, and typing.</li>
-        <li><strong>Room nameplate</strong> — drag the office; use arrow keys when focused. Home or the center icon resets it.</li>
+        <li><strong>Window-size icon</strong> — switch between the full browser view and a mini window.</li>
+        <li><strong>Room nameplate</strong> — in mini mode, drag the office or use arrow keys when focused. Home or the center icon resets it.</li>
       </ul>
       <p className="interaction-hint">You can also Tab between objects and use Enter or Space. Escape closes these notes. Nothing here makes real AI calls or changes your repositories.</p>
     </>

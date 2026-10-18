@@ -2,6 +2,16 @@
 
 Record dated work, actual validation results, limitations, and next steps. Do not label planned or simulated work as completed execution.
 
+## 2026-10-18 — full-browser office sizing
+
+- Fixed the small default presentation caused by the 840px compact-window cap. RoomScene now starts in a viewport-sized mode; SVG artwork scales proportionally without clipping or stretching. Aspect-ratio differences can leave some background space; this uses the browser area rather than requesting OS/browser Fullscreen API access.
+- Added an in-room size control next to the nameplate to switch to the existing draggable mini mode and back. Size changes reset window position while retaining room/task/character/equipment state. Dragging and keyboard movement are active only in mini mode.
+- Kept the change in focused existing files: room sizing CSS, RoomScene state, RoomNameplate control, drag enable guard, guide text, and current documentation. No historical snapshots or dependencies changed.
+- `npm test` (3 tests), `npm run lint`, and `npm run build` passed.
+- Chrome regression checks passed for default viewport sizing, mini/full toggling, room preservation, all existing task/door/dialog/pause/walking interactions, mini pointer/touch/keyboard drag and bounds/reset, mobile dialogs, and reduced motion. Full-browser sizing at 1920×1080, 390×844, and 844×390 had no page scrolling. No runtime exceptions observed.
+- Visually inspected `/tmp/ai-hq-full-browser.png`; the room uses the available browser size with proportional characters and accessible room objects. Harness: `/tmp/ai-hq-fullscreen-regression.mjs`.
+- Next: refresh the running local preview to review the larger default. No push, merge, deployment, or vanDijkFit changes.
+
 ## 2026-10-18 — GitHub publishing requested, awaiting authenticated publishing access
 
 - User explicitly requested publishing this project to GitHub. This authorizes the initial creation/push of a separate AI Headquarters repository under the previously confirmed vandijkthijs-source account; it does not authorize deployment or changes to vanDijkFit.

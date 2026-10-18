@@ -33,11 +33,12 @@ export default function RoomScene({
   agents, selected, running, coding, onSelect, onBoard, onHelp, onToggle, onRoomChange, children,
 }: Props) {
   const [roomIndex, setRoomIndex] = useState(0)
+  const [expanded, setExpanded] = useState(true)
   const [roomStates, setRoomStates] = useState([false, false, false])
   const [notice, setNotice] = useState('Click a teammate, a desk, or a door to explore.')
   const room = rooms[roomIndex]
   const { walkers, moveTo } = useOfficeMotion(running)
-  const { windowRef, offset, dragProps, reset } = useRoomDrag()
+  const { windowRef, offset, dragProps, reset } = useRoomDrag(!expanded)
   const selectedIndex = agents.findIndex(agent => agent.id === selected)
 
   function switchRoom(next: number) {
@@ -66,12 +67,13 @@ export default function RoomScene({
 
   return (
     <main className="app">
-      <section ref={windowRef} className={`hq-window room-${roomIndex} ${running ? '' : 'paused'}`}
+      <section ref={windowRef} className={`hq-window room-${roomIndex} ${expanded ? 'expanded' : ''} ${running ? '' : 'paused'}`}
         aria-label={`AI Headquarters — ${room.name}, interactive simulated office`}
-        style={{ transform: `translate(${offset.x}px, ${offset.y}px)` }}>
+        style={{ transform: expanded ? 'none' : `translate(${offset.x}px, ${offset.y}px)` }}>
         <svg className="office-scene" viewBox="0 0 760 520" role="group" aria-label={`${room.name}. Interact with the objects to explore.`}>
           <RoomShell />
-          <RoomNameplate name={room.name} dragProps={dragProps} onReset={reset} />
+          <RoomNameplate name={room.name} dragProps={dragProps} onReset={reset}
+            expanded={expanded} onToggleSize={() => { reset(); setExpanded(value => !value) }} />
           {[{ x: 51, direction: -1 }, { x: 645, direction: 1 }].map(({ x, direction }) => (
             <Door key={x} x={x} direction={direction}
               destination={rooms[(roomIndex + direction + rooms.length) % rooms.length].name}
