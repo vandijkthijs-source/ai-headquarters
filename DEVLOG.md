@@ -2,6 +2,14 @@
 
 Record dated work, actual validation results, limitations, and next steps. Do not label planned or simulated work as completed execution.
 
+## 2026-10-18 — small-file refactor, checkpoint 2: rooms and objects
+
+- Moved room configuration, shell, decor, footer, and individual desks/doors/board/equipment/nameplate/pause/plant objects into src/rooms. Moved pixel artwork and character placement into src/characters; extracted accessible SVG ObjectButton into src/ui.
+- RoomScene.tsx is now about 100 lines, coordinating room state, hooks, and object callbacks. Shared AgentId types replace the previous string callback/cast. Desks use the existing seat coordinates instead of repeating those coordinates in JSX.
+- Preserved SVG geometry, element order, labels, styling classes, and interaction semantics. Applied readable indentation and named Props declarations using the existing TypeScript formatter, with no formatter dependency. Removed trailing blank lines from extracted task modules.
+- Tests (3), lint, build, and the complete Chrome regression harness passed. Deterministic paused Engineering/UI Lab/QA screenshots match the pre-refactor PNGs byte-for-byte. Guide content matches visually; screenshot differences are confined to the close-button focus ring due to input-modality state.
+- Next: split and expand the dense stylesheet, document the edit map and small-file conventions, and verify final visuals/behavior.
+
 ## 2026-10-18 — small-file refactor, checkpoint 1: tasks and dialogs
 
 - Started from clean checkpoint `7aa3c43`. Captured deterministic paused-room/guide browser screenshots before editing for later visual comparison.

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import { agents } from './characters/characters'
 import type { AgentId } from './characters/characters'
-import RoomScene from './components/RoomScene'
+import RoomScene from './rooms/RoomScene'
 import AgentDetailsDialog from './tasks/AgentDetailsDialog'
 import TaskBoardDialog from './tasks/TaskBoardDialog'
 import { useTaskSimulation } from './tasks/useTaskSimulation'
@@ -40,7 +40,7 @@ function App() {
       selected={selected}
       running={running}
       coding={coding}
-      onSelect={id => selectAgent(id as AgentId)}
+      onSelect={selectAgent}
       onBoard={() => setOverlay('board')}
       onHelp={() => setOverlay('help')}
       onToggle={() => setRunning(value => !value)}

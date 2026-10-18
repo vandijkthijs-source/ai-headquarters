@@ -18,4 +18,3 @@ export function stateLabel(state: AgentState) {
   if (state === 'done') return 'Done'
   return 'Queued'
 }
-

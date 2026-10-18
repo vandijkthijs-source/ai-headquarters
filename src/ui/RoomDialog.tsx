@@ -1,7 +1,13 @@
 import { useEffect, useId, useRef } from 'react'
 import type { ReactNode } from 'react'
 
-export default function RoomDialog({ title, onClose, children }: { title: string; onClose: () => void; children: ReactNode }) {
+type Props = {
+  title: string
+  onClose: () => void
+  children: ReactNode
+}
+
+export default function RoomDialog({ title, onClose, children }: Props) {
   const ref = useRef<HTMLDialogElement>(null)
   const titleId = useId()
   useEffect(() => {
